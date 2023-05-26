@@ -6,9 +6,9 @@ import { toast } from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { BsGithub, BsGoogle } from "react-icons/bs";
 import { signIn, useSession } from "next-auth/react";
-import AuthSocialBtn from "../AuthSocialBtn";
-import Button from "../../../components/Button";
-import Input from "../../../components/input/Input";
+import AuthSocialBtn from "./AuthSocialBtn";
+import Button from "../../components/Button";
+import Input from "../../components/input/Input";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 
 type TaskProps = "LOGIN" | "REGISTER";
