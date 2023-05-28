@@ -19,7 +19,7 @@ export async function POST(request: Request) {
     }
 
     if (isGroup) {
-      await prisma.conversation.create({
+      const newGroup = await prisma.conversation.create({
         data: {
           isGroup,
           name,
@@ -39,7 +39,7 @@ export async function POST(request: Request) {
         },
       });
 
-      return NextResponse.json("New group created!");
+      return NextResponse.json(newGroup);
     }
 
     const existingConverstions = await prisma.conversation.findMany({
@@ -61,9 +61,9 @@ export async function POST(request: Request) {
 
     const conversation = existingConverstions[0];
 
-    if (conversation) return NextResponse.json("Conversation already exists!");
+    if (conversation) return NextResponse.json(conversation);
 
-    await prisma.conversation.create({
+    const newConversation = await prisma.conversation.create({
       data: {
         users: {
           connect: [{ id: currentUser.id }, { id: userId }],
@@ -74,7 +74,7 @@ export async function POST(request: Request) {
       },
     });
 
-    return NextResponse.json("New conversation created!");
+    return NextResponse.json(newConversation);
   } catch (err) {
     return new NextResponse("Internal Error", { status: 500 });
   }
