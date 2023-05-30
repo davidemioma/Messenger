@@ -9,6 +9,7 @@ interface Props {
   disabled?: boolean;
   danger?: boolean;
   secondary?: boolean;
+  ordinary?: boolean;
   onClick?: () => void;
   testId?: string;
 }
@@ -21,6 +22,7 @@ const Button = ({
   disabled,
   danger,
   secondary,
+  ordinary,
   testId,
 }: Props) => {
   return (
@@ -29,11 +31,13 @@ const Button = ({
       className={`flex items-center justify-center px-3 py-1.5 text-sm font-semibold rounded-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 ${
         fullWidth && "w-full"
       } ${disabled && "cursor-not-allowed opacity-50"} ${
-        secondary ? "text-gray-900" : "text-white"
+        secondary && "text-gray-900 bg-white"
       } ${
-        danger
-          ? "bg-rose-500 hover:bg-red-600 focus-visible:outline-rose-600"
-          : "bg-sky-500 hover:bg-sky-600 focus-visible:outline-sky-600"
+        danger &&
+        "bg-rose-500 text-white hover:bg-red-600 focus-visible:outline-rose-600"
+      } ${
+        ordinary &&
+        "bg-sky-500 hover:bg-sky-600 text-white focus-visible:outline-sky-600"
       }`}
       onClick={onClick}
       type={type}

@@ -5,6 +5,7 @@ import Link from "next/link";
 import { ConversationProps } from "@/types";
 import Avatar from "@/app/components/Avatar";
 import useOtherUser from "@/hooks/useOtherUser";
+import useProfileDrawer from "@/hooks/useProfileDrawer";
 import { HiChevronLeft, HiEllipsisHorizontal } from "react-icons/hi2";
 
 interface Props {
@@ -12,6 +13,8 @@ interface Props {
 }
 
 const Header = ({ conversation }: Props) => {
+  const profileDrawer = useProfileDrawer();
+
   const otherUser = useOtherUser(conversation);
 
   const statusText = useMemo(() => {
@@ -42,7 +45,7 @@ const Header = ({ conversation }: Props) => {
       <HiEllipsisHorizontal
         className="text-sky-500 hover:text-sky-600 cursor-pointer transition"
         size={32}
-        onClick={() => {}}
+        onClick={() => profileDrawer.onOpen()}
       />
     </div>
   );
