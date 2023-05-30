@@ -151,7 +151,7 @@ const AuthForm = () => {
             errors={errors}
           />
 
-          <Button fullWidth type="submit" disabled={loading}>
+          <Button ordinary fullWidth type="submit" disabled={loading}>
             {task === "LOGIN" ? "Login" : "Register"}
           </Button>
         </form>
