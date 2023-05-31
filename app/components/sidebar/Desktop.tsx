@@ -23,7 +23,7 @@ const Desktop = ({ currentUser }: Props) => {
 
       <div className="hidden lg:flex lg:flex-col lg:justify-between lg:bg-white lg:fixed lg:left-0 lg:inset-y-0 lg:w-24 lg:z-30 lg:py-4 lg:border-r lg:overflow-y-auto">
         <nav className="flex flex-col justify-between">
-          <ul className="flex flex-col items-start gap-1" role="list">
+          <ul className="flex flex-col items-center gap-1" role="list">
             {route.map((item) => (
               <Desktopitem
                 key={item.label}

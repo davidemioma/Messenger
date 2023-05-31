@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import useOtherUser from "@/hooks/useOtherUser";
 import Avatar from "@/app/components/Avatar";
+import AvatarGroup from "@/app/components/AvatarGroup";
 
 interface Props {
   conversation: ConversationProps;
@@ -65,7 +66,11 @@ const Conversation = ({ conversation, selected }: Props) => {
       } w-full flex items-center gap-3 p-3 rounded-lg cursor-pointer hover:bg-neutral-100 transition`}
       onClick={onClick}
     >
-      <Avatar user={otherUser} />
+      {conversation.isGroup ? (
+        <AvatarGroup users={conversation.users} />
+      ) : (
+        <Avatar user={otherUser} />
+      )}
 
       <div className="flex-1">
         <div className="flex items-center justify-between">

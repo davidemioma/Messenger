@@ -20,13 +20,11 @@ const Desktopitem = ({ label, href, Icon, active, onClick }: Props) => {
     <li className="w-full" onClick={onClickHandler}>
       <Link
         href={href}
-        className={`group flex items-center gap-3 text-sm p-3 font-semibold leading-6 hover:bg-gray-100 hover:text-black ${
+        className={`group flex justify-center items-center gap-3 text-sm p-3 font-semibold leading-6 hover:bg-gray-100 hover:text-black ${
           active ? "bg-gray-100 text-black" : "text-gray-500"
         }`}
       >
-        <Icon classname="w-6 h-6 shrink-0" />
-
-        <span>{label}</span>
+        <Icon size={24} classname="shrink-0" />
       </Link>
     </li>
   );

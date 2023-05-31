@@ -9,6 +9,7 @@ import Avatar from "@/app/components/Avatar";
 import useOtherUser from "@/hooks/useOtherUser";
 import useProfileDrawer from "@/hooks/useProfileDrawer";
 import useConfirmModal from "@/hooks/useConfirmModal";
+import AvatarGroup from "@/app/components/AvatarGroup";
 
 interface Props {
   conversation: ConversationProps;
@@ -43,7 +44,11 @@ const ProfileDrawer = ({ conversation }: Props) => {
       <div className="relative flex-1 mt-6">
         <div className="flex flex-col items-center">
           <div className="mb-2">
-            <Avatar user={otherUser} />
+            {conversation.isGroup ? (
+              <AvatarGroup users={conversation.users} />
+            ) : (
+              <Avatar user={otherUser} />
+            )}
           </div>
 
           <p>{title}</p>
@@ -64,6 +69,16 @@ const ProfileDrawer = ({ conversation }: Props) => {
 
         <div className="w-full py-5 sm:px-0">
           <dl className="px-4 sm:px-6 space-y-8 sm:space-y-6">
+            {conversation.isGroup && (
+              <div className="text-sm space-y-1">
+                <dt className="font-medium text-gray-500 sm:w-40">Emails</dt>
+
+                <dd className="text-gray-900 sm:col-span-2">
+                  {conversation.users.map((user) => user.email).join(", ")}
+                </dd>
+              </div>
+            )}
+
             {!conversation.isGroup && (
               <div className="text-sm space-y-1">
                 <dt className="font-medium text-gray-500 sm:w-40">Email</dt>
