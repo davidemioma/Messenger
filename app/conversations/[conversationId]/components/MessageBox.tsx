@@ -6,6 +6,8 @@ import { format } from "date-fns";
 import { MessageProps } from "@/types";
 import { useSession } from "next-auth/react";
 import Avatar from "@/app/components/Avatar";
+import useImageModal from "@/hooks/useImageModal";
+import ImageModal from "./ImageModal";
 
 interface Props {
   message: MessageProps;
@@ -14,6 +16,8 @@ interface Props {
 
 const MessageBox = ({ message, isLast }: Props) => {
   const { data: session } = useSession();
+
+  const imageModal = useImageModal();
 
   const currentUserMsg = session?.user?.email === message?.sender?.email;
 
@@ -45,16 +49,21 @@ const MessageBox = ({ message, isLast }: Props) => {
           </p>
         )}
 
-        {message.image && (
-          <div className="relative w-[250px] h-[250px] rounded-md overflow-hidden">
-            <Image
-              className="object-cover cursor-pointer hover:scale-110 transition-transform duration-300"
-              src={message.image}
-              fill
-              alt=""
-            />
-          </div>
-        )}
+        <>
+          {message.image && <ImageModal src={message.image} />}
+
+          {message.image && (
+            <div className="relative w-[250px] h-[250px] rounded-md overflow-hidden">
+              <Image
+                className="object-cover cursor-pointer hover:scale-110 transition-transform duration-300"
+                src={message.image}
+                fill
+                alt=""
+                onClick={() => imageModal.onOpen()}
+              />
+            </div>
+          )}
+        </>
 
         {isLast && currentUserMsg && seenList.length > 0 && (
           <p className="text-sm text-gray-500 font-light">{`Seen by ${seenList}`}</p>
