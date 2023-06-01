@@ -1,10 +1,13 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { User } from "@prisma/client";
+import { find } from "lodash";
+import { useSession } from "next-auth/react";
 import { ConversationProps } from "@/types";
 import { useRouter } from "next/navigation";
 import Conversation from "./Conversation";
+import { pusherClient } from "@/lib/pusher";
 import GroupChatModal from "./GroupChatModal";
 import useConversation from "@/hooks/useConverstion";
 import { MdOutlineGroupAdd } from "react-icons/md";
@@ -18,9 +21,69 @@ interface Props {
 const Converstions = ({ conversations, users }: Props) => {
   const router = useRouter();
 
+  const { data: session } = useSession();
+
   const groupChatModal = useGroupChatModal();
 
+  const [convos, setConvos] = useState(conversations);
+
   const { conversationId, isOpen } = useConversation();
+
+  const pusherKey = useMemo(() => session?.user?.email, [session?.user?.email]);
+
+  useEffect(() => {
+    if (!pusherKey) return;
+
+    pusherClient.subscribe(pusherKey);
+
+    const newHandler = (conversation: ConversationProps) => {
+      setConvos((current) => {
+        if (find(current, { id: conversation.id })) {
+          return current;
+        }
+
+        return [conversation, ...current];
+      });
+    };
+
+    const updatehandler = (conversation: ConversationProps) => {
+      setConvos((current) =>
+        current.map((convo) => {
+          if (convo.id === conversation.id) {
+            return { ...convo, messages: conversation.messages };
+          }
+
+          return convo;
+        })
+      );
+    };
+
+    const removeHandler = (conversation: ConversationProps) => {
+      setConvos((current) => {
+        return [...current.filter((convo) => convo.id !== conversation.id)];
+      });
+
+      if (conversationId === conversation.id) {
+        router.push("/conversation");
+      }
+    };
+
+    pusherClient.bind("conversation:new", newHandler);
+
+    pusherClient.bind("converstion:update", updatehandler);
+
+    pusherClient.bind("conversation:remove", removeHandler);
+
+    return () => {
+      pusherClient.unsubscribe(pusherKey);
+
+      pusherClient.unbind("conversation:new", newHandler);
+
+      pusherClient.unbind("converstion:update", updatehandler);
+
+      pusherClient.unbind("conversation:remove", removeHandler);
+    };
+  }, [pusherKey, conversationId, router]);
 
   return (
     <>
@@ -43,7 +106,7 @@ const Converstions = ({ conversations, users }: Props) => {
         </div>
 
         <div className="flex flex-col">
-          {conversations?.map((conversation) => (
+          {convos?.map((conversation) => (
             <Conversation
               key={conversation.id}
               conversation={conversation}

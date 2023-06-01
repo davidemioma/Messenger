@@ -35,7 +35,7 @@ export default async function Conversation({ params }: { params: Params }) {
 
         <Header conversation={conversation} />
 
-        <Body initialMessages={messages} />
+        <Body initialMessages={messages!} />
 
         <Form />
 
