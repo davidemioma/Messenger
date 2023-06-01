@@ -10,6 +10,7 @@ import useOtherUser from "@/hooks/useOtherUser";
 import useProfileDrawer from "@/hooks/useProfileDrawer";
 import useConfirmModal from "@/hooks/useConfirmModal";
 import AvatarGroup from "@/app/components/AvatarGroup";
+import useActivelist from "@/hooks/useActiveList";
 
 interface Props {
   conversation: ConversationProps;
@@ -22,6 +23,10 @@ const ProfileDrawer = ({ conversation }: Props) => {
 
   const otherUser = useOtherUser(conversation);
 
+  const { members } = useActivelist();
+
+  const isActive = members.indexOf(otherUser?.email!) !== -1;
+
   const joinedDate = useMemo(() => {
     return format(new Date(conversation.createdAt), "PP");
   }, [conversation.createdAt]);
@@ -33,8 +38,8 @@ const ProfileDrawer = ({ conversation }: Props) => {
   const status = useMemo(() => {
     if (conversation.isGroup) return `${conversation.users.length} members`;
 
-    return "Active";
-  }, [conversation]);
+    return isActive ? "Active" : "Offline";
+  }, [conversation, isActive]);
 
   return (
     <ProfileModal

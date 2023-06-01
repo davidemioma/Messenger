@@ -5,6 +5,7 @@ import Link from "next/link";
 import { ConversationProps } from "@/types";
 import Avatar from "@/app/components/Avatar";
 import useOtherUser from "@/hooks/useOtherUser";
+import useActivelist from "@/hooks/useActiveList";
 import useProfileDrawer from "@/hooks/useProfileDrawer";
 import AvatarGroup from "@/app/components/AvatarGroup";
 import { HiChevronLeft, HiEllipsisHorizontal } from "react-icons/hi2";
@@ -18,11 +19,15 @@ const Header = ({ conversation }: Props) => {
 
   const otherUser = useOtherUser(conversation);
 
+  const { members } = useActivelist();
+
+  const isActive = members.indexOf(otherUser?.email!) !== -1;
+
   const statusText = useMemo(() => {
     if (conversation.isGroup) return `${conversation.users.length} members`;
 
-    return "Active";
-  }, [conversation]);
+    return isActive ? "Active" : "Offline";
+  }, [conversation, isActive]);
 
   return (
     <div className="bg-white w-full flex items-center justify-between py-3 px-4 lg:px-6 border-b shadow-sm">

@@ -64,7 +64,7 @@ const Converstions = ({ conversations, users }: Props) => {
       });
 
       if (conversationId === conversation.id) {
-        router.push("/conversation");
+        router.push("/conversations");
       }
     };
 

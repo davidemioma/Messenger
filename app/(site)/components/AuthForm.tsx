@@ -184,11 +184,7 @@ const AuthForm = () => {
               : "Already have an account?"}
           </div>
 
-          <button
-            data-testId="task-btn"
-            className="underline"
-            onClick={toggleTask}
-          >
+          <button className="underline" onClick={toggleTask}>
             {task === "LOGIN" ? "Create an account" : "login"}
           </button>
         </div>
