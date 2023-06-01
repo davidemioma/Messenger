@@ -24,21 +24,22 @@ const Conversation = ({ conversation, selected }: Props) => {
 
   //Getting the last message
   const lastMessage = useMemo(() => {
-    const lastMessage = conversation.messages[conversation.messages.length - 1];
+    const lastMessage =
+      conversation?.messages?.[conversation?.messages?.length - 1];
 
     return lastMessage;
-  }, [conversation.messages]);
+  }, [conversation?.messages]);
 
   //Checking if current user has seen the message
   const hasSeen = useMemo(() => {
     if (!lastMessage) return false;
 
-    const seenArr = lastMessage.seen || [];
+    const seenArr = lastMessage?.seen || [];
 
     if (!session?.user?.email) return false;
 
     return (
-      seenArr.findIndex((user) => user.email === session?.user?.email) !== -1
+      seenArr.findIndex((user) => user?.email === session?.user?.email) !== -1
     );
   }, [session?.user?.email, lastMessage]);
 

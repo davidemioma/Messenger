@@ -49,9 +49,9 @@ const GroupChatModal = ({ users }: Props) => {
       .then(() => {
         toast.success("Group created");
 
-        router.refresh();
-
         groupChatModal.onClose();
+
+        router.refresh();
       })
       .catch((err) => {
         toast.error("Something went wrong");

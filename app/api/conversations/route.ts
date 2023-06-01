@@ -20,7 +20,7 @@ export async function POST(request: Request) {
     }
 
     if (isGroup) {
-      const newGroup = await prisma.conversation.create({
+      const newConversation = await prisma.conversation.create({
         data: {
           isGroup,
           name,
@@ -40,13 +40,17 @@ export async function POST(request: Request) {
         },
       });
 
-      newGroup.users.forEach(async (user) => {
+      newConversation.users.forEach(async (user) => {
         if (user.email) {
-          await pusherServer.trigger(user.email, "conversation:new", newGroup);
+          await pusherServer.trigger(
+            user.email,
+            "conversation:new",
+            newConversation
+          );
         }
       });
 
-      return NextResponse.json(newGroup);
+      return NextResponse.json(newConversation);
     }
 
     const existingConverstions = await prisma.conversation.findMany({

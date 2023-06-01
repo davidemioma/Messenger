@@ -12,6 +12,7 @@ import GroupChatModal from "./GroupChatModal";
 import useConversation from "@/hooks/useConverstion";
 import { MdOutlineGroupAdd } from "react-icons/md";
 import useGroupChatModal from "@/hooks/useGroupChatModal";
+import useProfileDrawer from "@/hooks/useProfileDrawer";
 
 interface Props {
   conversations: ConversationProps[];
@@ -24,6 +25,8 @@ const Converstions = ({ conversations, users }: Props) => {
   const { data: session } = useSession();
 
   const groupChatModal = useGroupChatModal();
+
+  const profileDrawer = useProfileDrawer();
 
   const [convos, setConvos] = useState(conversations);
 
@@ -64,6 +67,8 @@ const Converstions = ({ conversations, users }: Props) => {
       });
 
       if (conversationId === conversation.id) {
+        profileDrawer.onClose();
+
         router.push("/conversations");
       }
     };
