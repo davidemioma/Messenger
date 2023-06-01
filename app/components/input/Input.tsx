@@ -5,7 +5,6 @@ import { FieldValues, UseFormRegister, FieldErrors } from "react-hook-form";
 
 interface Props {
   id: string;
-  testId?: string;
   label: string;
   type?: string;
   disabled?: boolean;
@@ -16,7 +15,6 @@ interface Props {
 
 const Input = ({
   id,
-  testId,
   label,
   type,
   disabled,
@@ -38,7 +36,6 @@ const Input = ({
           errors[id] ? "focus:ring-rose-500" : "focus:ring-sky-600"
         } ${disabled && "cursor-not-allowed opacity-50"}`}
         id={id}
-        data-testId={testId}
         type={type}
         autoComplete={id}
         disabled={disabled}

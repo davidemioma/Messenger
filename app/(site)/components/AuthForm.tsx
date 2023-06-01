@@ -119,7 +119,6 @@ const AuthForm = () => {
           {task === "REGISTER" && (
             <Input
               id="name"
-              testId="nameEl"
               type="text"
               label="Name"
               disabled={loading}
@@ -131,7 +130,6 @@ const AuthForm = () => {
 
           <Input
             id="email"
-            testId="emailEl"
             type="email"
             label="Email Address"
             disabled={loading}
@@ -142,7 +140,6 @@ const AuthForm = () => {
 
           <Input
             id="password"
-            testId="passwordEl"
             type="password"
             label="Password"
             disabled={loading}
@@ -170,13 +167,11 @@ const AuthForm = () => {
 
         <div className="flex gap-2">
           <AuthSocialBtn
-            testId="git"
             Icon={BsGithub}
             onClick={() => socialHandler("github")}
           />
 
           <AuthSocialBtn
-            testId="google"
             Icon={BsGoogle}
             onClick={() => socialHandler("google")}
           />

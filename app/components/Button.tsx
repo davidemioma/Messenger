@@ -11,7 +11,6 @@ interface Props {
   secondary?: boolean;
   ordinary?: boolean;
   onClick?: () => void;
-  testId?: string;
 }
 
 const Button = ({
@@ -23,11 +22,9 @@ const Button = ({
   danger,
   secondary,
   ordinary,
-  testId,
 }: Props) => {
   return (
     <button
-      data-testId={testId}
       className={`flex items-center justify-center px-3 py-1.5 text-sm font-semibold rounded-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 ${
         fullWidth && "w-full"
       } ${disabled && "cursor-not-allowed opacity-50"} ${
