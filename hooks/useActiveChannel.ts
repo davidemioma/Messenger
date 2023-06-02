@@ -21,9 +21,9 @@ const useActiveChannel = () => {
     channel.bind("pusher:subscription_succeeded", (members: Members) => {
       const initialMembers: string[] = [];
 
-      members.each((member: Record<string, any>) =>
-        initialMembers.push(member.id)
-      );
+      members.each((member: Record<string, any>) => {
+        initialMembers.push(member.id);
+      });
 
       set(initialMembers);
     });

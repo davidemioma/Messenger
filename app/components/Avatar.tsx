@@ -12,6 +12,8 @@ interface Props {
 const Avatar = ({ user }: Props) => {
   const { members } = useActivelist();
 
+  console.log(members);
+
   const isActive = members.indexOf(user?.email!) !== -1;
 
   return (
